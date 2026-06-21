@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daniela's Cleaning Co. — Westlock, Alberta</title>
+  <meta name="description" content="Professional cleaning services in Westlock, Alberta. Fragrance-free, two cleaners every visit, safe ingredients. Book today!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & BASE ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hot-pink:   #E91E8C;
+      --blush:      #FCE4F1;
+      --soft-pink:  #F48FB1;
+      --deep-pink:  #C2185B;
+      --white:      #FFFFFF;
+      --light-gray: #F8F8F8;
+      --text-dark:  #2C1A23;
+      --text-mid:   #5C3A4E;
+      --fb-blue:    #1877F2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    h1, h2, h3, .logo-text { font-family: 'Playfair Display', serif; }
+
+    a { text-decoration: none; color: inherit; }
+
+    img { max-width: 100%; display: block; }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--hot-pink);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      border: none;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(233,30,140,0.3); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--hot-pink); color: #fff; }
+    .btn-outline  { background: transparent; color: var(--hot-pink); border: 2.5px solid var(--hot-pink); }
+    .btn-outline:hover { background: var(--hot-pink); color: #fff; }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────────── */
+    #custom-cursor {
+      position: fixed;
+      width: 16px;
+      height: 16px;
+      background: var(--hot-pink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.15s, height 0.15s, opacity 0.15s;
+      mix-blend-mode: multiply;
+    }
+
+    .sparkle-trail {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99998;
+      font-size: 1.1rem;
+      animation: sparkle-fade 0.9s ease forwards;
+      transform: translate(-50%, -50%);
+      user-select: none;
+    }
+
+    @keyframes sparkle-fade {
+      0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%, -120%) scale(0.3); }
+    }
+
+    /* ─── FLOATING BUBBLES BACKGROUND ──────────────────── */
+    #bubbles-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(252,228,241,0.55), rgba(233,30,140,0.08));
+      border: 1.5px solid rgba(233,30,140,0.15);
+      animation: float-up linear infinite;
+      bottom: -120px;
+    }
+
+    @keyframes float-up {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) translateX(var(--drift)) scale(0.85); opacity: 0; }
+    }
+
+    /* ─── NAVBAR ────────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 2rem;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(233,30,140,0.1);
+      transition: box-shadow 0.3s;
+    }
+
+    #navbar.scrolled { box-shadow: 0 4px 24px rgba(233,30,140,0.12); }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--hot-pink);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--hot-pink); }
+
+    .nav-links .nav-book {
+      background: var(--hot-pink);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-links .nav-book:hover {
+      background: var(--deep-pink);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(233,30,140,0.35);
+      color: #fff;
+    }
+
+    /* Hamburger */
+    #hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 1100;
+      background: none;
+      border: none;
+    }
+
+    .ham-line {
+      width: 26px;
+      height: 3px;
+      background: var(--hot-pink);
+      border-radius: 2px;
+      transition: transform 0.35s, opacity 0.35s;
+      display: block;
+    }
+
+    #hamburger.open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    #hamburger.open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    #hamburger.open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      transform-origin: center center;
+    }
+
+    #mobile-menu.open {
+      display: flex;
+      animation: menu-open 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+
+    #mobile-menu.closing {
+      display: flex;
+      animation: bubble-pop-close 0.45s cubic-bezier(0.55,0,1,0.45) forwards;
+    }
+
+    @keyframes menu-open {
+      from { opacity: 0; transform: scale(0.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bubble-pop-close {
+      0%   { opacity: 1; transform: scale(1); }
+      40%  { opacity: 1; transform: scale(1.08); background: rgba(252,228,241,0.97); }
+      100% { opacity: 0; transform: scale(0.05); border-radius: 50%; background: var(--hot-pink); }
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .mobile-nav-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav-links a:hover { color: var(--hot-pink); }
+
+    .mobile-nav-links .nav-book {
+      background: var(--hot-pink);
+      color: #fff !important;
+      padding: 0.7rem 2rem;
+      border-radius: 50px;
+      font-size: 1.4rem;
+    }
+
+    .mobile-close-burst {
+      position: absolute;
+      pointer-events: none;
+      font-size: 2rem;
+      animation: burst-out 0.5s ease forwards;
+      z-index: 9999;
+    }
+
+    @keyframes burst-out {
+      0%   { opacity: 1; transform: scale(0.5); }
+      60%  { opacity: 1; transform: scale(2.5); }
+      100% { opacity: 0; transform: scale(3.5); }
+    }
+
+    /* ─── HERO ──────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #FFF0F8 0%, #FCE4F1 40%, #F8BBD9 80%, #F48FB1 100%);
+      padding: 90px 2rem 4rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Twinkling stars */
+    .star {
+      position: absolute;
+      font-size: 1.1rem;
+      animation: twinkle var(--duration) ease-in-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.6); }
+      50%       { opacity: 1; transform: scale(1.2); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 760px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(233,30,140,0.25);
+      color: var(--hot-pink);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-h1 {
+      font-size: clamp(3.2rem, 8vw, 6rem);
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: var(--text-mid);
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .trust-badges {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .trust-badge {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(233,30,140,0.2);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* ─── WHY US ────────────────────────────────────────── */
+    #why-us {
+      background: var(--white);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    #why-us .section-subtitle { margin: 0 auto 3rem; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .why-card {
+      background: var(--white);
+      border: 1.5px solid rgba(233,30,140,0.12);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: left;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .why-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(233,30,140,0.15);
+    }
+
+    .why-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+
+    .why-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      color: var(--text-dark);
+    }
+
+    .why-card p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.65; }
+
+    /* ─── SERVICES ──────────────────────────────────────── */
+    #services {
+      background: var(--light-gray);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    #services .section-subtitle { margin: 0 auto 3rem; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 18px;
+      border: 1.5px solid rgba(233,30,140,0.12);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+
+    .service-card:hover { box-shadow: 0 8px 28px rgba(233,30,140,0.12); }
+
+    .service-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      gap: 0.75rem;
+    }
+
+    .service-header-left { display: flex; align-items: center; gap: 0.75rem; }
+
+    .service-icon { font-size: 1.5rem; }
+
+    .service-name-wrap { text-align: left; }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+    }
+
+    .service-price {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--hot-pink);
+    }
+
+    .service-toggle {
+      font-size: 1.4rem;
+      color: var(--hot-pink);
+      transition: transform 0.3s;
+      line-height: 1;
+      min-width: 22px;
+    }
+
+    .service-card.open .service-toggle { transform: rotate(45deg); }
+
+    .service-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+      padding: 0 1.5rem;
+    }
+
+    .service-card.open .service-body {
+      max-height: 200px;
+      padding: 0 1.5rem 1.25rem;
+    }
+
+    .service-body p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.65; }
+
+    .service-sparkle-pop {
+      display: inline-block;
+      animation: pop-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+      margin-left: 0.3rem;
+    }
+
+    @keyframes pop-in {
+      from { transform: scale(0) rotate(-30deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg);   opacity: 1; }
+    }
+
+    /* ─── ABOUT / MOM MOMENT ────────────────────────────── */
+    #about {
+      background: linear-gradient(135deg, var(--hot-pink) 0%, #C2185B 100%);
+      padding: 6rem 2rem;
+      color: #fff;
+    }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    #about .section-label { color: rgba(255,255,255,0.75); }
+
+    #about .section-title { color: #fff; }
+
+    .about-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      line-height: 1.85;
+      color: rgba(255,255,255,0.95);
+      border-left: 4px solid rgba(255,255,255,0.4);
+      padding-left: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-bubbles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .stat-bubble {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+
+    .stat-bubble .stat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+
+    .stat-bubble .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .stat-bubble .stat-label {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 0.3rem;
+      line-height: 1.4;
+    }
+
+    /* ─── BEFORE & AFTER ────────────────────────────────── */
+    #before-after {
+      background: var(--white);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    #before-after .section-subtitle { margin: 0 auto 3rem; }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .ba-placeholder {
+      border-radius: 20px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .ba-placeholder.before {
+      border: 3px dashed #ccc;
+      background: #f5f5f5;
+      color: #999;
+    }
+
+    .ba-placeholder.after {
+      border: 3px dashed var(--soft-pink);
+      background: var(--blush);
+      color: var(--hot-pink);
+    }
+
+    .ba-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .ba-placeholder.before .ba-label { color: #aaa; }
+    .ba-placeholder.after  .ba-label { color: var(--hot-pink); }
+
+    /* ─── REVIEWS ───────────────────────────────────────── */
+    #reviews {
+      background: var(--light-gray);
+      padding: 6rem 0;
+      text-align: center;
+    }
+
+    #reviews .inner-pad { padding: 0 2rem; }
+
+    #reviews .section-subtitle { margin: 0 auto 2.5rem; }
+
+    .ticker-wrapper {
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding: 1rem 0;
+    }
+
+    .ticker-wrapper::before,
+    .ticker-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .ticker-wrapper::before { left: 0; background: linear-gradient(to right, var(--light-gray), transparent); }
+    .ticker-wrapper::after  { right: 0; background: linear-gradient(to left,  var(--light-gray), transparent); }
+
+    .ticker-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      animation: ticker-scroll 40s linear infinite;
+    }
+
+    .ticker-wrapper:hover .ticker-track { animation-play-state: paused; }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .review-card {
+      background: var(--white);
+      border: 2px solid rgba(233,30,140,0.18);
+      border-radius: 18px;
+      padding: 1.5rem;
+      min-width: 300px;
+      max-width: 320px;
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    .review-stars { color: #FFB300; font-size: 1.1rem; margin-bottom: 0.6rem; }
+
+    .review-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .review-name {
+      font-weight: 800;
+      color: var(--hot-pink);
+      font-size: 0.9rem;
+    }
+
+    .review-source {
+      font-size: 0.78rem;
+      color: #aaa;
+      margin-top: 0.2rem;
+    }
+
+    .fb-reviews-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--fb-blue);
+      color: #fff;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 1rem;
+    }
+
+    .fb-reviews-btn:hover { background: #0d6efd; transform: translateY(-2px); color: #fff; }
+
+    /* ─── SERVICE AREAS ─────────────────────────────────── */
+    #areas {
+      background: var(--white);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    #areas .section-subtitle { margin: 0 auto 2.5rem; }
+
+    .area-bubbles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+
+    .area-bubble {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      border: 2px solid var(--hot-pink);
+      color: var(--hot-pink);
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: transparent;
+      cursor: default;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+    }
+
+    .area-bubble:hover {
+      background: var(--hot-pink);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    .areas-note {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      font-weight: 600;
+    }
+
+    .areas-note a { color: var(--hot-pink); font-weight: 800; }
+
+    /* ─── CONTACT & BOOKING ─────────────────────────────── */
+    #contact {
+      background: linear-gradient(135deg, var(--blush) 0%, #FDE8F3 60%, #ffd6ec 100%);
+      padding: 6rem 2rem;
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-left .section-subtitle { margin-bottom: 2rem; }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(233,30,140,0.15);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card-icon { font-size: 1.5rem; min-width: 32px; }
+
+    .contact-card-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--hot-pink);
+      margin-bottom: 0.15rem;
+    }
+
+    .contact-card-val {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+
+    .contact-card-val a { color: var(--hot-pink); font-weight: 800; }
+
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+
+    .social-btn.fb { background: var(--fb-blue); color: #fff; }
+
+    .social-btn.ig {
+      background: linear-gradient(135deg, #F48FB1 0%, #E91E8C 50%, #9C27B0 100%);
+      color: #fff;
+    }
+
+    /* Booking form */
+    .booking-form-wrap {
+      background: #fff;
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 12px 48px rgba(233,30,140,0.12);
+      border: 1.5px solid rgba(233,30,140,0.1);
+    }
+
+    .booking-form-wrap h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-dark);
+    }
+
+    .booking-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group { margin-bottom: 1.1rem; }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid rgba(233,30,140,0.18);
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--hot-pink);
+      box-shadow: 0 0 0 3px rgba(233,30,140,0.1);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 90px; }
+
+    .form-submit-btn {
+      width: 100%;
+      background: var(--hot-pink);
+      color: #fff;
+      padding: 1rem;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit-btn:hover {
+      background: var(--deep-pink);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(233,30,140,0.3);
+    }
+
+    .form-note {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      margin-top: 0.75rem;
+    }
+
+    /* Success state */
+    #form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    #form-success .success-emoji { font-size: 3.5rem; margin-bottom: 1rem; }
+
+    #form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--hot-pink);
+      margin-bottom: 0.75rem;
+    }
+
+    #form-success p { color: var(--text-mid); line-height: 1.7; }
+
+    /* ─── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: #2C1A23;
+      padding: 3.5rem 2rem 2rem;
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--soft-pink);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--soft-pink); }
+
+    .footer-divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--hot-pink), transparent);
+      margin: 1.5rem auto;
+      max-width: 500px;
+      border: none;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+    }
+
+    /* ─── SCROLL FADE IN ────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #hamburger { display: flex; }
+
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .stat-bubbles { grid-template-columns: 1fr 1fr; }
+
+      .ba-grid { grid-template-columns: 1fr; }
+
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      .hero-buttons { flex-direction: column; align-items: center; }
+    }
+
+    @media (max-width: 500px) {
+      .stat-bubbles { grid-template-columns: 1fr; }
+      .trust-badges { flex-direction: column; align-items: center; }
+    }
+
+    /* ─── REDUCED MOTION ────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .bubble, .star, .sparkle-trail, .ticker-track { animation: none !important; }
+      .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+      * { transition-duration: 0.01ms !important; }
+      body { cursor: auto; }
+      #custom-cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="custom-cursor"></div>
+
+  <!-- Floating bubbles background -->
+  <div id="bubbles-container"></div>
+
+  <!-- ─── NAVBAR ──────────────────────────────────────────── -->
+  <nav id="navbar">
+    <a href="#hero" class="logo-text">Daniela's Cleaning Co.</a>
+    <ul class="nav-links">
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#areas">Areas</a></li>
+      <li><a href="#contact" class="nav-book">Book Now</a></li>
+    </ul>
+    <button id="hamburger" aria-label="Open menu">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-nav-links">
+      <li><a href="#why-us"   class="mobile-link">Why Us</a></li>
+      <li><a href="#services" class="mobile-link">Services</a></li>
+      <li><a href="#reviews"  class="mobile-link">Reviews</a></li>
+      <li><a href="#areas"    class="mobile-link">Areas</a></li>
+      <li><a href="#contact"  class="mobile-link nav-book">Book Now</a></li>
+    </ul>
+  </div>
+
+  <!-- ─── HERO ────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">✨ Westlock &amp; Surrounding Area</div>
+      <h1 class="hero-h1">You do enough.</h1>
+      <p class="hero-sub">Your home should feel like a deep breath. A clean, calm space waiting for you when you walk through the door. You've earned it — let us handle this one.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">✨ Schedule Now</a>
+        <a href="#contact" class="btn btn-outline">💬 Get a Free Quote</a>
+      </div>
+      <div class="trust-badges">
+        <span class="trust-badge">🌿 Fragrance-Free Always</span>
+        <span class="trust-badge">👯 2 Cleaners Every Visit</span>
+        <span class="trust-badge">💚 Clean Ingredients Only</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WHY US ──────────────────────────────────────────── -->
+  <section id="why-us">
+    <span class="section-label fade-up">Why Daniela's</span>
+    <h2 class="section-title fade-up">Not your average cleaner.</h2>
+    <p class="section-subtitle fade-up">We do things differently — and your home (and family) will feel the difference.</p>
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-icon">🌿</div>
+        <h3>Clean Ingredients Only</h3>
+        <p>No synthetic fragrances. No harsh chemicals. Safe for babies, kids, pets and people with sensitivities.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">👯‍♀️</div>
+        <h3>Two Cleaners Every Time</h3>
+        <p>We never send one worker alone. Two professionals every visit for safety and quality you can count on.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">💕</div>
+        <h3>Zero Judgment</h3>
+        <p>Life gets messy. We genuinely don't care what it looks like when we arrive. That is our job and we love it.</p>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-icon">✨</div>
+        <h3>Professional Grade Results</h3>
+        <p>Colour-coded cloths, dwell-time techniques and pro products that actually work.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ────────────────────────────────────────── -->
+  <section id="services">
+    <span class="section-label fade-up">What We Do</span>
+    <h2 class="section-title fade-up">Tap a service to see more ✨</h2>
+    <p class="section-subtitle fade-up">Customizable to your home and schedule. Hourly rates — pay for exactly what you need.</p>
+
+    <div class="services-grid">
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">🏠</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Regular Cleaning</div>
+              <div class="service-price">From $35/hr</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Kitchen, bathrooms, floors, dusting every time. Fully customizable — skip what you don't need, focus on what you do.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">🫧</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Deep Clean</div>
+              <div class="service-price">From $40/hr</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Full refresh including inside oven, fridge, microwave, inside cabinets, baseboards, window tracks, grout scrubbing.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">📦</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Move-Out Clean</div>
+              <div class="service-price">From $40/hr</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Leave your last home spotless and get that deposit back. Top to bottom, room to room.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">🪟</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Windows</div>
+              <div class="service-price">$8–10 per window</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Streak-free, crystal clean inside and out using professional microfiber technique.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">👕</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Laundry Service</div>
+              <div class="service-price">$15 per load</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Wash, dry and fold while we clean. Fragrance-free detergent available.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">🚗</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Car Seats &amp; Baby Gear</div>
+              <div class="service-price">$25 per seat</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Deep cleaned with baby-safe fragrance-free products.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">💙</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Senior Home Assistance</div>
+              <div class="service-price">From $35/hr</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Patient, kind and thorough. We treat every senior's home with the care we would give our own family.</p>
+        </div>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-header" role="button" tabindex="0" aria-expanded="false">
+          <div class="service-header-left">
+            <span class="service-icon">🏗️</span>
+            <div class="service-name-wrap">
+              <div class="service-name">Post-Construction</div>
+              <div class="service-price">From $45/hr</div>
+            </div>
+          </div>
+          <span class="service-toggle">+</span>
+        </div>
+        <div class="service-body">
+          <p>Dust, debris and everything that comes after a renovation. Handled.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── ABOUT / MOM MOMENT ──────────────────────────────── -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="fade-up">
+        <span class="section-label">A note from Daniela</span>
+        <h2 class="section-title">I'm a mom. I get it.</h2>
+        <blockquote class="about-quote">
+          "As a mom myself, I know what life actually looks like behind closed doors. The pile of laundry. The kitchen after a busy week. The bathroom you have been avoiding since Tuesday. You do not need to tidy before I come. You do not need to apologize. I promise I have seen it all, and I show up with a smile every single time. Because that is the job and I genuinely love it."
+        </blockquote>
+      </div>
+      <div class="stat-bubbles fade-up">
+        <div class="stat-bubble">
+          <div class="stat-icon">💕</div>
+          <div class="stat-label">Judgment-free<br>zone</div>
+        </div>
+        <div class="stat-bubble">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Professionals<br>every visit, always</div>
+        </div>
+        <div class="stat-bubble">
+          <div class="stat-icon">🌿</div>
+          <div class="stat-label">Safe for your<br>whole family</div>
+        </div>
+        <div class="stat-bubble">
+          <div class="stat-icon">✨</div>
+          <div class="stat-label">Your home is<br>in good hands</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BEFORE & AFTER ──────────────────────────────────── -->
+  <section id="before-after">
+    <span class="section-label fade-up">The Proof</span>
+    <h2 class="section-title fade-up">Before &amp; After</h2>
+    <p class="section-subtitle fade-up">Real homes. Real results. No stock photos — just actual transformations.</p>
+    <div class="ba-grid">
+      <!-- ADD YOUR OWN PHOTO HERE -->
+      <div class="ba-placeholder before fade-up">
+        <div class="ba-label">Before</div>
+        <span>📷</span>
+        <span>ADD YOUR OWN BEFORE PHOTO HERE</span>
+        <!-- ADD YOUR OWN PHOTO HERE -->
+      </div>
+      <!-- ADD YOUR OWN PHOTO HERE -->
+      <div class="ba-placeholder after fade-up">
+        <div class="ba-label">After ✨</div>
+        <span>📸</span>
+        <span>ADD YOUR OWN AFTER PHOTO HERE</span>
+        <!-- ADD YOUR OWN PHOTO HERE -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REVIEWS ─────────────────────────────────────────── -->
+  <section id="reviews">
+    <div class="inner-pad">
+      <span class="section-label fade-up">What People Are Saying</span>
+      <h2 class="section-title fade-up">Real reviews from real clients ⭐</h2>
+    </div>
+
+    <div class="ticker-wrapper fade-up">
+      <div class="ticker-track" id="ticker-track">
+
+        <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Your real Facebook review goes here"</p>
+          <div class="review-name">— Happy Client</div>
+          <div class="review-source">Facebook Review</div>
+          <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        </div>
+
+        <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Your real Facebook review goes here"</p>
+          <div class="review-name">— Happy Client</div>
+          <div class="review-source">Facebook Review</div>
+          <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        </div>
+
+        <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Your real Facebook review goes here"</p>
+          <div class="review-name">— Happy Client</div>
+          <div class="review-source">Facebook Review</div>
+          <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        </div>
+
+        <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Your real Facebook review goes here"</p>
+          <div class="review-name">— Happy Client</div>
+          <div class="review-source">Facebook Review</div>
+          <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        </div>
+
+        <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Your real Facebook review goes here"</p>
+          <div class="review-name">— Happy Client</div>
+          <div class="review-source">Facebook Review</div>
+          <!-- REPLACE WITH REAL FACEBOOK REVIEW -->
+        </div>
+
+      </div><!-- end ticker-track (JS will duplicate for seamless loop) -->
+    </div>
+
+    <div class="inner-pad fade-up" style="text-align:center;">
+      <a href="https://www.facebook.com/share/1BaFozFPSY/" target="_blank" rel="noopener" class="fb-reviews-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+        See all reviews on Facebook
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── SERVICE AREAS ────────────────────────────────────── -->
+  <section id="areas">
+    <span class="section-label fade-up">Where We Clean</span>
+    <h2 class="section-title fade-up">Serving Northern and Central Alberta</h2>
+    <p class="section-subtitle fade-up">Based in Westlock and expanding. If your town is not listed reach out — we are growing fast.</p>
+    <div class="area-bubbles fade-up">
+      <span class="area-bubble">Westlock ✨</span>
+      <span class="area-bubble">Barrhead</span>
+      <span class="area-bubble">Athabasca</span>
+      <span class="area-bubble">Morinville</span>
+      <span class="area-bubble">Slave Lake</span>
+      <span class="area-bubble">Whitecourt</span>
+      <span class="area-bubble">St. Albert</span>
+      <span class="area-bubble">Fort Saskatchewan</span>
+      <span class="area-bubble">Spruce Grove</span>
+      <span class="area-bubble">Sherwood Park</span>
+      <span class="area-bubble">Edmonton</span>
+      <span class="area-bubble">Surrounding Areas</span>
+    </div>
+    <p class="areas-note fade-up">Not sure if we serve your area? Call or text — <a href="tel:7803508930">780-350-8930</a></p>
+  </section>
+
+  <!-- ─── CONTACT & BOOKING ────────────────────────────────── -->
+  <section id="contact">
+    <div class="contact-inner">
+
+      <!-- Left: contact info -->
+      <div class="contact-left fade-up">
+        <span class="section-label">Let's Get Started</span>
+        <h2 class="section-title">Book your clean today ✨</h2>
+        <p class="section-subtitle">No pressure, no commitment. Just tell us what you need and we will take it from there.</p>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">📞</div>
+          <div>
+            <div class="contact-card-title">Phone / Text</div>
+            <div class="contact-card-val"><a href="tel:7803508930">780-350-8930</a></div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">💳</div>
+          <div>
+            <div class="contact-card-title">Payment</div>
+            <div class="contact-card-val">Cash or E-Transfer accepted</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div>
+            <div class="contact-card-title">Location</div>
+            <div class="contact-card-val">Westlock, Alberta</div>
+          </div>
+        </div>
+
+        <div class="social-row">
+          <a href="https://www.facebook.com/share/1BaFozFPSY/" target="_blank" rel="noopener" class="social-btn fb">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            Facebook
+          </a>
+          <button class="social-btn ig" onclick="alert('Instagram coming soon! Find us on Facebook for now 💕')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: booking form -->
+      <div class="booking-form-wrap fade-up">
+        <div id="booking-form-inner">
+          <h3>✨ Book Your Clean</h3>
+          <p class="booking-subtitle">Fill this out and Daniela will be in touch within a few hours!</p>
+
+          <form id="booking-form" novalidate>
+            <div class="form-group">
+              <label for="f-name">Your Name</label>
+              <input type="text" id="f-name" name="name" placeholder="e.g. Sarah M." required />
+            </div>
+            <div class="form-group">
+              <label for="f-phone">Phone / Text</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="780-000-0000" required />
+            </div>
+            <div class="form-group">
+              <label for="f-town">Your Town</label>
+              <select id="f-town" name="town">
+                <option value="">Select your town…</option>
+                <option>Westlock</option>
+                <option>Barrhead</option>
+                <option>Athabasca</option>
+                <option>Morinville</option>
+                <option>Slave Lake</option>
+                <option>Whitecourt</option>
+                <option>St. Albert</option>
+                <option>Fort Saskatchewan</option>
+                <option>Spruce Grove</option>
+                <option>Sherwood Park</option>
+                <option>Edmonton</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-service">Service Needed</label>
+              <select id="f-service" name="service">
+                <option value="">Choose a service…</option>
+                <option>Regular Cleaning</option>
+                <option>Deep Clean</option>
+                <option>Move-Out Clean</option>
+                <option>Windows</option>
+                <option>Laundry</option>
+                <option>Car Seats / Baby Gear</option>
+                <option>Senior Home Assistance</option>
+                <option>Post-Construction</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-notes">Preferred Date / Any Notes</label>
+              <textarea id="f-notes" name="notes" placeholder="e.g. Weekday afternoons work best, 3-bedroom home…"></textarea>
+            </div>
+            <button type="submit" class="form-submit-btn">✨ Send My Request!</button>
+            <p class="form-note">I will text or call you back within a few hours 💕</p>
+          </form>
+        </div>
+
+        <div id="form-success">
+          <div class="success-emoji">🫧✨💕</div>
+          <h3>Yay! Message received!</h3>
+          <p>Daniela will be in touch shortly.<br>Get ready for some sparkle! 💕</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">Daniela's Cleaning Co.</div>
+    <p class="footer-tagline">Your home, in good hands. ✨</p>
+    <nav class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#areas">Areas</a>
+      <a href="https://www.facebook.com/share/1BaFozFPSY/" target="_blank" rel="noopener">Facebook</a>
+      <a href="tel:7803508930">780-350-8930</a>
+      <a href="#contact">Book Now</a>
+    </nav>
+    <hr class="footer-divider" />
+    <p class="footer-copy">© 2026 Daniela's Cleaning Co. · Westlock, Alberta · Serving Northern and Central Alberta · Clean ingredients · Fragrance-free always · Two cleaners every visit</p>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Reduced motion check ───────────────────────────── */
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── Custom cursor ──────────────────────────────────── */
+    const cursor = document.getElementById('custom-cursor');
+    const sparkleEmojis = ['✨', '⭐', '💫', '🌟'];
+    let lastSparkleTime = 0;
+
+    if (!reducedMotion) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+
+        const now = Date.now();
+        if (now - lastSparkleTime > 80) {
+          lastSparkleTime = now;
+          const el = document.createElement('div');
+          el.className = 'sparkle-trail';
+          el.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+          el.style.left = e.clientX + 'px';
+          el.style.top  = e.clientY + 'px';
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 900);
+        }
+      });
+
+      document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+      document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+    }
+
+    /* ── Floating bubbles ───────────────────────────────── */
+    if (!reducedMotion) {
+      const container = document.getElementById('bubbles-container');
+      for (let i = 0; i < 18; i++) {
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        const size  = 20 + Math.random() * 60;
+        const left  = Math.random() * 100;
+        const delay = Math.random() * 18;
+        const dur   = 10 + Math.random() * 18;
+        const drift = (Math.random() - 0.5) * 80;
+        b.style.cssText = `
+          width:${size}px; height:${size}px;
+          left:${left}%;
+          animation-duration:${dur}s;
+          animation-delay:-${delay}s;
+          --drift:${drift}px;
+        `;
+        container.appendChild(b);
+      }
+    }
+
+    /* ── Twinkling stars in hero ────────────────────────── */
+    if (!reducedMotion) {
+      const hero = document.getElementById('hero');
+      const starEmojis = ['✨', '⭐', '💫', '🌟', '✦', '✧'];
+      for (let i = 0; i < 22; i++) {
+        const s = document.createElement('span');
+        s.className = 'star';
+        s.textContent = starEmojis[Math.floor(Math.random() * starEmojis.length)];
+        s.style.cssText = `
+          left:${Math.random() * 100}%;
+          top:${Math.random() * 100}%;
+          --duration:${2 + Math.random() * 4}s;
+          animation-delay:${Math.random() * 4}s;
+        `;
+        hero.appendChild(s);
+      }
+    }
+
+    /* ── Navbar scroll shadow ───────────────────────────── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    /* ── Mobile menu ────────────────────────────────────── */
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+    let menuOpen = false;
+
+    function openMenu() {
+      mobileMenu.classList.remove('closing');
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('open');
+      menuOpen = true;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.add('closing');
+      menuOpen = false;
+      document.body.style.overflow = '';
+
+      /* Bubble pop burst effect */
+      if (!reducedMotion) {
+        const burst = document.createElement('div');
+        burst.className = 'mobile-close-burst';
+        burst.textContent = '💥';
+        burst.style.cssText = 'top:50%;left:50%;position:fixed;transform:translate(-50%,-50%);';
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 500);
+      }
+
+      mobileMenu.addEventListener('animationend', () => {
+        mobileMenu.classList.remove('open', 'closing');
+      }, { once: true });
+    }
+
+    hamburger.addEventListener('click', () => {
+      menuOpen ? closeMenu() : openMenu();
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) closeMenu();
+    });
+
+    /* ── Service card expand / collapse ─────────────────── */
+    const serviceCards = document.querySelectorAll('.service-card');
+
+    serviceCards.forEach(card => {
+      const header = card.querySelector('.service-header');
+
+      const toggle = (e) => {
+        const isOpen = card.classList.contains('open');
+        /* Close all others */
+        serviceCards.forEach(c => {
+          c.classList.remove('open');
+          c.querySelector('.service-header').setAttribute('aria-expanded', 'false');
+          const sp = c.querySelector('.service-sparkle-pop');
+          if (sp) sp.remove();
+        });
+        if (!isOpen) {
+          card.classList.add('open');
+          header.setAttribute('aria-expanded', 'true');
+          /* Sparkle pop */
+          const name = card.querySelector('.service-name');
+          const sp = document.createElement('span');
+          sp.className = 'service-sparkle-pop';
+          sp.textContent = '✨';
+          name.appendChild(sp);
+        }
+      };
+
+      header.addEventListener('click', toggle);
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(e); }
+      });
+    });
+
+    /* ── Reviews ticker — duplicate for seamless loop ───── */
+    const track = document.getElementById('ticker-track');
+    if (track) {
+      const clone = track.innerHTML;
+      track.innerHTML += clone;
+    }
+
+    /* ── Scroll fade-up ─────────────────────────────────── */
+    if (!reducedMotion) {
+      const fadeEls = document.querySelectorAll('.fade-up');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      fadeEls.forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+    }
+
+    /* ── Booking form submit ─────────────────────────────── */
+    const form        = document.getElementById('booking-form');
+    const formInner   = document.getElementById('booking-form-inner');
+    const formSuccess = document.getElementById('form-success');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name  = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      if (!name || !phone) {
+        alert('Please enter your name and phone number so Daniela can reach you! 💕');
+        return;
+      }
+      formInner.style.display = 'none';
+      formSuccess.style.display = 'block';
+    });
+
+  })();
+  </script>
+</body>
+</html>
