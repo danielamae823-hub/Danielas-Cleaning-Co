@@ -1,10 +1,23 @@
+<!-- ============================================
+     DANIELA'S PRICES — EDIT HERE ANYTIME
+     ============================================
+     Regular Cleaning:     $30/hr
+     Deep Clean:           $35/hr
+     Move-Out Clean:       $40/hr
+     Windows:              $8-10 per window
+     Laundry:              $12/load
+     Car Seat:             $25/seat
+     Booster Seat:         $20/seat
+     Senior Assistance:    $25/hr
+     Post-Construction:    $45/hr
+     ============================================ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daniela's Cleaning Co. — Westlock, Alberta</title>
-  <meta name="description" content="Professional cleaning services in Westlock, Barrhead, Athabasca and Morinville, Alberta. Fragrance-free, two cleaners every visit." />
+  <meta name="description" content="Professional cleaning services in Westlock, Barrhead, Athabasca and Morinville, Alberta. Fragrance-free always." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -393,7 +406,7 @@
     .service-card.open .service-toggle { transform: rotate(45deg); }
 
     .service-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); padding: 0 1.4rem; }
-    .service-card.open .service-body { max-height: 200px; padding: 0 1.4rem 1.25rem; }
+    .service-card.open .service-body { max-height: 220px; padding: 0 1.4rem 1.25rem; }
     .service-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.7; }
 
     /* ABOUT */
@@ -711,6 +724,7 @@
     <ul class="nav-links">
       <li><a href="#why-us">Why Us</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#areas">Areas</a></li>
       <li><a href="#contact" class="nav-book">Book Now</a></li>
@@ -724,11 +738,12 @@
 
   <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
     <ul class="mobile-nav-links">
-      <li><a href="#why-us"   class="mobile-link">Why Us</a></li>
-      <li><a href="#services" class="mobile-link">Services</a></li>
-      <li><a href="#reviews"  class="mobile-link">Reviews</a></li>
-      <li><a href="#areas"    class="mobile-link">Areas</a></li>
-      <li><a href="#contact"  class="mobile-link nav-book">Book Now</a></li>
+      <li><a href="#why-us"       class="mobile-link">Why Us</a></li>
+      <li><a href="#services"     class="mobile-link">Services</a></li>
+      <li><a href="gallery.html"  class="mobile-link">Gallery</a></li>
+      <li><a href="#reviews"      class="mobile-link">Reviews</a></li>
+      <li><a href="#areas"        class="mobile-link">Areas</a></li>
+      <li><a href="#contact"      class="mobile-link nav-book">Book Now</a></li>
     </ul>
   </div>
 
@@ -781,7 +796,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Regular Cleaning</div>
-            <div class="service-price">From $35/hr</div>
+            <div class="service-price" data-price-key="regular">From $30/hr</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -792,7 +807,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Deep Clean</div>
-            <div class="service-price">From $40/hr</div>
+            <div class="service-price" data-price-key="deep">From $35/hr</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -803,7 +818,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Move-Out Clean</div>
-            <div class="service-price">From $40/hr</div>
+            <div class="service-price" data-price-key="moveout">From $40/hr</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -814,7 +829,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Windows</div>
-            <div class="service-price">$8–10 per window</div>
+            <div class="service-price" data-price-key="windows">$8&ndash;10 per window</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -825,7 +840,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Laundry Service</div>
-            <div class="service-price">$15 per load</div>
+            <div class="service-price" data-price-key="laundry">$12/load</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -836,18 +851,18 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Car Seats &amp; Baby Gear</div>
-            <div class="service-price">$25 per seat</div>
+            <div class="service-price" data-price-key="carseat">$25/seat</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
-        <div class="service-body"><p>Deep cleaned with baby-safe fragrance-free products.</p></div>
+        <div class="service-body"><p>Deep cleaned with baby-safe fragrance-free products. Car seats <span data-price-key="carseat">$25/seat</span>, booster seats <span data-price-key="boosterseat">$20/seat</span>.</p></div>
       </div>
 
       <div class="service-card fade-up">
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Senior Home Assistance</div>
-            <div class="service-price">From $35/hr</div>
+            <div class="service-price" data-price-key="senior">From $25/hr</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -858,7 +873,7 @@
         <div class="service-header" role="button" tabindex="0" aria-expanded="false">
           <div class="service-name-wrap">
             <div class="service-name">Post-Construction</div>
-            <div class="service-price">From $45/hr</div>
+            <div class="service-price" data-price-key="postconstruct">From $45/hr</div>
           </div>
           <span class="service-toggle">+</span>
         </div>
@@ -1081,6 +1096,7 @@
     <p class="footer-tagline">Your home, in good hands.</p>
     <nav class="footer-links">
       <a href="#services">Services</a>
+      <a href="gallery.html">Gallery</a>
       <a href="#areas">Areas</a>
       <a href="https://www.facebook.com/share/1BaFozFPSY/" target="_blank" rel="noopener">Facebook</a>
       <a href="tel:7803508930">780-350-8930</a>
@@ -1091,8 +1107,34 @@
   </footer>
 
   <script>
+  /* =============================================
+     DANIELA'S PRICES — EDIT HERE ANYTIME
+     =============================================
+     Change any value below and it updates
+     everywhere on the page automatically.
+     ============================================= */
+  var PRICES = {
+    regular:       'From $30/hr',
+    deep:          'From $35/hr',
+    moveout:       'From $40/hr',
+    windows:       '$8–10 per window',
+    laundry:       '$12/load',
+    carseat:       '$25/seat',
+    boosterseat:   '$20/seat',
+    senior:        'From $25/hr',
+    postconstruct: 'From $45/hr'
+  };
+  /* ============================================= */
+
   (function () {
     'use strict';
+
+    /* Populate all price elements */
+    var priceEls = document.querySelectorAll('[data-price-key]');
+    for (var pi = 0; pi < priceEls.length; pi++) {
+      var key = priceEls[pi].getAttribute('data-price-key');
+      if (PRICES[key] !== undefined) priceEls[pi].textContent = PRICES[key];
+    }
 
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1196,7 +1238,7 @@
       document.querySelectorAll('.fade-up').forEach(function (el) { el.classList.add('visible'); });
     }
 
-    /* ── Booking form — Web3Forms integration ── */
+    /* Booking form — Web3Forms integration */
     var form      = document.getElementById('booking-form');
     var formInner = document.getElementById('booking-form-inner');
     var formSucc  = document.getElementById('form-success');
@@ -1216,7 +1258,6 @@
         return;
       }
 
-      /* Dynamic subject includes name and cleaning type */
       document.getElementById('f-subject').value =
         'New Quote Request from ' + name + ' — ' + service;
 

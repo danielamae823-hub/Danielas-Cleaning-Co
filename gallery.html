@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Daniela's Cleaning Co.</title>
+  <meta name="description" content="Before & after photos and cleaning gallery for Daniela's Cleaning Co., Westlock, Alberta." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:      #B5536E;
+      --primary-dark: #8E3F57;
+      --blush:        #F0E4E8;
+      --petal:        #E6D0D8;
+      --cream:        #FAF7F8;
+      --section-alt:  #F5EEEF;
+      --white:        #FFFFFF;
+      --text-dark:    #2A1820;
+      --text-mid:     #6B4A58;
+      --border:       rgba(0,0,0,0.07);
+      --fb-blue:      #1877F2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      background: var(--cream);
+    }
+
+    h1, h2, h3, .logo-text { font-family: 'Playfair Display', serif; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    /* BUBBLES */
+    #bubbles-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(230,208,216,0.38), rgba(181,83,110,0.05));
+      border: 1px solid rgba(181,83,110,0.1);
+      animation: float-up linear infinite;
+      bottom: -120px;
+    }
+
+    @keyframes float-up {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10%  { opacity: 0.8; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-110vh) translateX(var(--drift)) scale(0.85); opacity: 0; }
+    }
+
+    /* NAVBAR */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 2.5rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+    }
+
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a.active { color: var(--primary); }
+
+    .nav-links .nav-book {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-links .nav-book:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 14px rgba(181,83,110,0.3);
+      color: #fff;
+    }
+
+    #hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 1100;
+      background: none;
+      border: none;
+    }
+
+    .ham-line {
+      width: 24px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+      display: block;
+    }
+
+    #hamburger.open .ham-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #hamburger.open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    #hamburger.open .ham-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      transform-origin: center center;
+    }
+
+    #mobile-menu.open {
+      display: flex;
+      animation: menu-open 0.3s ease forwards;
+    }
+
+    #mobile-menu.closing {
+      display: flex;
+      animation: bubble-pop-close 0.4s ease forwards;
+    }
+
+    @keyframes menu-open {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bubble-pop-close {
+      0%   { opacity: 1; transform: scale(1); }
+      40%  { opacity: 1; transform: scale(1.03); background: rgba(240,228,232,0.98); }
+      100% { opacity: 0; transform: scale(0.05); border-radius: 50%; background: var(--primary); }
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .mobile-nav-links a {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav-links a:hover, .mobile-nav-links a.active { color: var(--primary); }
+
+    .mobile-nav-links .nav-book {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 0.7rem 2rem;
+      border-radius: 8px;
+      font-size: 1.3rem;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: linear-gradient(150deg, #FAF5F7 0%, #F0E4E8 55%, #E4CDD5 100%);
+      padding: 120px 2rem 5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header .section-label { margin-bottom: 1rem; }
+
+    .page-header h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: var(--text-mid);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* GALLERY SECTIONS */
+    .gallery-section {
+      padding: 5rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-section:nth-child(odd) { background: var(--white); }
+    .gallery-section:nth-child(even) { background: var(--section-alt); }
+
+    .gallery-section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+
+    .gallery-section-header p {
+      font-size: 0.97rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-top: 0.5rem;
+    }
+
+    /* BEFORE & AFTER */
+    #ba-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .ba-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .ba-img-wrap {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--petal);
+      border: 1px solid var(--border);
+    }
+
+    .ba-img-wrap img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .ba-img-wrap:hover img { transform: scale(1.03); }
+
+    .ba-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .before-label {
+      background: rgba(42,24,32,0.65);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .after-label {
+      background: rgba(181,83,110,0.82);
+      color: #fff;
+    }
+
+    /* GENERAL PHOTOS GRID */
+    #general-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .general-img-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--petal);
+      border: 1px solid var(--border);
+      aspect-ratio: 4/3;
+    }
+
+    .general-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .general-img-wrap:hover img { transform: scale(1.04); }
+
+    /* EMPTY STATES */
+    .gallery-empty {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .gallery-empty p {
+      color: var(--text-mid);
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
+
+    .gallery-empty .upload-hint {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* LIGHTBOX */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(42,24,32,0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      border-radius: 10px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      cursor: default;
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      line-height: 1;
+    }
+
+    #lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    /* LOADING */
+    .gallery-loading {
+      text-align: center;
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      padding: 2rem;
+    }
+
+    /* CTA */
+    .gallery-cta {
+      background: linear-gradient(135deg, #B5536E 0%, #8E3F57 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-cta p {
+      color: rgba(255,255,255,0.85);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      border: none;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--primary);
+    }
+
+    .btn-white:hover {
+      background: var(--blush);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    /* FOOTER */
+    footer { background: #2A1820; padding: 3.5rem 2rem 2rem; text-align: center; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--petal); margin-bottom: 0.4rem; }
+    .footer-tagline { font-size: 0.9rem; color: rgba(255,255,255,0.4); margin-bottom: 1.8rem; }
+
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-links a { color: rgba(255,255,255,0.55); font-size: 0.87rem; font-weight: 500; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--petal); }
+
+    .footer-divider { height: 1px; background: linear-gradient(to right, transparent, rgba(181,83,110,0.5), transparent); margin: 1.5rem auto; max-width: 400px; border: none; }
+    .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.28); line-height: 1.7; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #hamburger { display: flex; }
+      #navbar { padding: 0 1.5rem; }
+      .ba-pair { grid-template-columns: 1fr; }
+      .ba-img-wrap img { height: 260px; }
+      #general-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    }
+
+    @media (max-width: 500px) {
+      #general-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bubble { animation: none !important; }
+      .ba-img-wrap img, .general-img-wrap img { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="bubbles-container"></div>
+
+  <nav id="navbar">
+    <a href="index.html" class="logo-text">Daniela's Cleaning Co.</a>
+    <ul class="nav-links">
+      <li><a href="index.html#why-us">Why Us</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="index.html#areas">Areas</a></li>
+      <li><a href="index.html#contact" class="nav-book">Book Now</a></li>
+    </ul>
+    <button id="hamburger" aria-label="Open menu">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html#why-us"   class="mobile-link">Why Us</a></li>
+      <li><a href="index.html#services" class="mobile-link">Services</a></li>
+      <li><a href="gallery.html"        class="mobile-link active">Gallery</a></li>
+      <li><a href="index.html#reviews"  class="mobile-link">Reviews</a></li>
+      <li><a href="index.html#areas"    class="mobile-link">Areas</a></li>
+      <li><a href="index.html#contact"  class="mobile-link nav-book">Book Now</a></li>
+    </ul>
+  </div>
+
+  <div class="page-header">
+    <span class="section-label">Our Work</span>
+    <h1>The proof is in the clean.</h1>
+    <p>A picture says everything. Browse before &amp; after transformations and a look at the spaces we care for.</p>
+  </div>
+
+  <!-- BEFORE & AFTER -->
+  <section class="gallery-section">
+    <div class="gallery-section-header">
+      <span class="section-label">Transformations</span>
+      <h2 class="section-title">Before &amp; After</h2>
+      <p>Real homes, real results. No filters.</p>
+    </div>
+    <div id="ba-grid">
+      <div class="gallery-loading" id="ba-loading">Loading photos...</div>
+    </div>
+    <div class="gallery-empty" id="ba-empty" style="display:none;">
+      <p>Before &amp; after photos coming soon.</p>
+      <p class="upload-hint">Add photos named before-1.jpg, after-1.jpg, before-2.jpg, after-2.jpg&hellip; to the /images/ folder.</p>
+    </div>
+  </section>
+
+  <!-- GENERAL CLEANING PHOTOS -->
+  <section class="gallery-section">
+    <div class="gallery-section-header">
+      <span class="section-label">Our Work</span>
+      <h2 class="section-title">Cleaning Photos</h2>
+      <p>A glimpse of what we do, every single visit.</p>
+    </div>
+    <div id="general-grid">
+      <div class="gallery-loading" id="general-loading">Loading photos...</div>
+    </div>
+    <div class="gallery-empty" id="general-empty" style="display:none;">
+      <p>General cleaning photos coming soon.</p>
+      <p class="upload-hint">Add photos named cleaning-1.jpg, cleaning-2.jpg&hellip; to the /images/ folder.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="gallery-cta">
+    <h2>Ready for your own transformation?</h2>
+    <p>Get in touch and Daniela will put together a quote tailored to your home.</p>
+    <a href="index.html#contact" class="btn btn-white">Book a Clean</a>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <footer>
+    <div class="footer-logo">Daniela's Cleaning Co.</div>
+    <p class="footer-tagline">Your home, in good hands.</p>
+    <nav class="footer-links">
+      <a href="index.html#services">Services</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="index.html#areas">Areas</a>
+      <a href="https://www.facebook.com/share/1BaFozFPSY/" target="_blank" rel="noopener">Facebook</a>
+      <a href="tel:7803508930">780-350-8930</a>
+      <a href="index.html#contact">Book Now</a>
+    </nav>
+    <hr class="footer-divider" />
+    <p class="footer-copy">&copy; 2026 Daniela's Cleaning Co. &middot; Westlock, Alberta &middot; Fragrance-free always</p>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var MAX_PROBE = 50; /* max images to try per series */
+
+    /* Floating bubbles */
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      var container = document.getElementById('bubbles-container');
+      for (var i = 0; i < 18; i++) {
+        var b = document.createElement('div');
+        b.className = 'bubble';
+        var size  = 20 + Math.random() * 60;
+        var left  = Math.random() * 100;
+        var delay = Math.random() * 18;
+        var dur   = 12 + Math.random() * 16;
+        var drift = (Math.random() - 0.5) * 80;
+        b.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+left+'%;animation-duration:'+dur+'s;animation-delay:-'+delay+'s;--drift:'+drift+'px;';
+        container.appendChild(b);
+      }
+    }
+
+    /* Mobile menu */
+    var hamburger  = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    var mobileLinks = mobileMenu.querySelectorAll('.mobile-link');
+    var menuOpen = false;
+
+    function openMenu() {
+      mobileMenu.classList.remove('closing');
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('open');
+      menuOpen = true;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.add('closing');
+      menuOpen = false;
+      document.body.style.overflow = '';
+      mobileMenu.addEventListener('animationend', function () {
+        mobileMenu.classList.remove('open', 'closing');
+      }, { once: true });
+    }
+
+    hamburger.addEventListener('click', function () { menuOpen ? closeMenu() : openMenu(); });
+    mobileLinks.forEach(function (link) { link.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menuOpen) closeMenu(); });
+
+    /* Lightbox */
+    var lightbox     = document.getElementById('lightbox');
+    var lightboxImg  = document.getElementById('lightbox-img');
+    var lightboxClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      lightboxImg.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+
+    function addClickToOpen(wrap, src, alt) {
+      wrap.style.cursor = 'zoom-in';
+      wrap.addEventListener('click', function () { openLightbox(src, alt); });
+    }
+
+    /* Sequential image probe — stops at first 404 */
+    function probeSequential(prefix, max, onDone) {
+      var found = [];
+      function tryNext(n) {
+        if (n > max) { onDone(found); return; }
+        var img = new Image();
+        var src = 'images/' + prefix + '-' + n + '.jpg';
+        img.onload  = function () { found.push(src); tryNext(n + 1); };
+        img.onerror = function () { onDone(found); };
+        img.src = src;
+      }
+      tryNext(1);
+    }
+
+    /* Build Before & After section */
+    function buildBA(beforeSrcs) {
+      var baGrid    = document.getElementById('ba-grid');
+      var baLoading = document.getElementById('ba-loading');
+      var baEmpty   = document.getElementById('ba-empty');
+
+      baLoading.style.display = 'none';
+
+      if (beforeSrcs.length === 0) {
+        baEmpty.style.display = 'block';
+        return;
+      }
+
+      beforeSrcs.forEach(function (beforeSrc, idx) {
+        var num      = idx + 1;
+        var afterSrc = 'images/after-' + num + '.jpg';
+
+        var pair = document.createElement('div');
+        pair.className = 'ba-pair';
+
+        /* Before side */
+        var beforeWrap = document.createElement('div');
+        beforeWrap.className = 'ba-img-wrap';
+        var beforeImg = document.createElement('img');
+        beforeImg.src = beforeSrc;
+        beforeImg.alt = 'Before cleaning — photo ' + num;
+        beforeImg.loading = 'lazy';
+        var beforeLabel = document.createElement('p');
+        beforeLabel.className = 'ba-label before-label';
+        beforeLabel.textContent = 'Before';
+        beforeWrap.appendChild(beforeImg);
+        beforeWrap.appendChild(beforeLabel);
+        addClickToOpen(beforeWrap, beforeSrc, 'Before cleaning — photo ' + num);
+        pair.appendChild(beforeWrap);
+
+        /* After side — probe and add if it exists */
+        var afterImg = new Image();
+        afterImg.onload = function () {
+          var afterWrap = document.createElement('div');
+          afterWrap.className = 'ba-img-wrap';
+          var aImg = document.createElement('img');
+          aImg.src = afterSrc;
+          aImg.alt = 'After cleaning — photo ' + num;
+          aImg.loading = 'lazy';
+          var afterLabel = document.createElement('p');
+          afterLabel.className = 'ba-label after-label';
+          afterLabel.textContent = 'After';
+          afterWrap.appendChild(aImg);
+          afterWrap.appendChild(afterLabel);
+          addClickToOpen(afterWrap, afterSrc, 'After cleaning — photo ' + num);
+          pair.appendChild(afterWrap);
+        };
+        afterImg.src = afterSrc;
+
+        baGrid.appendChild(pair);
+      });
+    }
+
+    /* Build General Photos section */
+    function buildGeneral(srcs) {
+      var grid           = document.getElementById('general-grid');
+      var generalLoading = document.getElementById('general-loading');
+      var generalEmpty   = document.getElementById('general-empty');
+
+      generalLoading.style.display = 'none';
+
+      if (srcs.length === 0) {
+        generalEmpty.style.display = 'block';
+        return;
+      }
+
+      srcs.forEach(function (src, idx) {
+        var wrap = document.createElement('div');
+        wrap.className = 'general-img-wrap';
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Cleaning photo ' + (idx + 1);
+        img.loading = 'lazy';
+        wrap.appendChild(img);
+        addClickToOpen(wrap, src, 'Cleaning photo ' + (idx + 1));
+        grid.appendChild(wrap);
+      });
+    }
+
+    /* Kick off probing */
+    probeSequential('before', MAX_PROBE, function (beforeSrcs) {
+      buildBA(beforeSrcs);
+      probeSequential('cleaning', MAX_PROBE, function (cleanSrcs) {
+        buildGeneral(cleanSrcs);
+      });
+    });
+
+  })();
+  </script>
+</body>
+</html>
