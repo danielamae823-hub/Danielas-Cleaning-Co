@@ -757,18 +757,29 @@ async function renderDoc(d, scale){
 }
 const thumbOf = async (d, px=240) => (await renderDoc(d, px/Math.max(d.w,d.h))).toDataURL('image/jpeg',.82);
 
-let exp={s:1,f:'png'}, lastUrl=null;
+let exp={s:1,f:'png'}, lastUrl=null, lastBlob=null, dlCap=null;
+try{ window.claude?.use?.('downloads')?.then(x=>{ dlCap=x; }).catch(()=>{}); }catch{}
 async function openExport(){ if(editing) endEdit(); $('#modal').hidden=false; await refreshExport(); }
 async function refreshExport(){
   $('#mPrev').textContent='Rendering…';
   const cv=await renderDoc(doc, exp.s);
   const blob=await new Promise(r=>cv.toBlob(r, 'image/'+exp.f, .92));
-  if(lastUrl) URL.revokeObjectURL(lastUrl); lastUrl=URL.createObjectURL(blob);
+  if(lastUrl) URL.revokeObjectURL(lastUrl); lastBlob=blob; lastUrl=URL.createObjectURL(blob);
   const im=new Image(); im.src=lastUrl; im.alt='Preview of your design'; $('#mPrev').replaceChildren(im);
   const name=(doc.name||'design').replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-').toLowerCase()||'design';
   const a=$('#dlLink'); a.href=lastUrl; a.download=`${name}.${exp.f==='jpeg'?'jpg':'png'}`;
   $('#mInfo').textContent=`${cv.width} × ${cv.height} px · ${(blob.size/1024/1024).toFixed(2)} MB. If the Save button doesn't start a download here, right-click the preview (or press and hold on a phone) and choose Save image.`;
 }
+$('#dlLink').addEventListener('click', e => {
+  if(!dlCap || !lastBlob) return; // hosted on your own site: the normal download link works
+  e.preventDefault();
+  dlCap.save({filename:$('#dlLink').download, data:lastBlob}).then(()=>toast('Image saved')).catch(err=>{
+    const c=err?.code;
+    if(c==='declined') return;
+    if(c==='rate_limited') toast('A save is already waiting for you to confirm.');
+    else toast('Saving isn\'t available here. Right-click the preview (or press and hold) and choose Save image.');
+  });
+});
 function closeModal(){ $('#modal').hidden=true; }
 $('#exportBtn').onclick=openExport; $('#mClose').onclick=closeModal;
 $('#modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
